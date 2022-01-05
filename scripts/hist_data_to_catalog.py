@@ -1,6 +1,9 @@
 import datetime
 import os
+import shutil
+import tarfile
 from functools import partial
+from pathlib import Path
 
 import pandas as pd
 from nautilus_trader.backtest.data.providers import TestInstrumentProvider
@@ -12,12 +15,27 @@ from nautilus_trader.persistence.catalog import DataCatalog
 from nautilus_trader.persistence.external.core import process_files, write_objects
 from nautilus_trader.persistence.external.readers import TextReader
 
-from scripts.util import remove_catalog_path, RAW_DATA_DIR, CATALOG_DIR
+ROOT = Path(__file__).parent.parent
+CATALOG_DIR = ROOT / "catalogs"
+RAW_DATA_DIR = ROOT / "raw_data"
+
+
+def tar_dir(path: Path):
+    assert isinstance(path, Path)
+    with tarfile.open(f"{path.parent}/{path.stem}.tar.gz", "w:gz") as archive:
+        archive.add(str(path), arcname=path.stem, recursive=True)
+
+
+def remove_catalog_path(catalog_path: str):
+    if os.path.exists(catalog_path):
+        shutil.rmtree(catalog_path)
 
 
 def parser(line, instrument_id: InstrumentId):
     ts, bid, ask, idx = line.split(b",")
-    dt = pd.Timestamp(datetime.datetime.strptime(ts.decode(), "%Y%m%d %H%M%S%f"), tz="UTC")
+    dt = pd.Timestamp(
+        datetime.datetime.strptime(ts.decode(), "%Y%m%d %H%M%S%f"), tz="UTC"
+    )
     ts = dt_to_unix_nanos(dt)
     yield QuoteTick(
         instrument_id=instrument_id,
