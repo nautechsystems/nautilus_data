@@ -67,9 +67,22 @@ def load_fx_hist_data(filename: str, currency: str, catalog_path: str):
     write_objects(catalog, [instrument])
 
 
-if __name__ == "__main__":
+def download(url):
+    import requests
+    filename = url.rsplit("/", maxsplit=1)[1]
+    with open(filename, 'wb') as f:
+        f.write(requests.get(url).content)
+
+
+def main():
+    # Download raw data
+    download("https://raw.githubusercontent.com/nautechsystems/nautilus_data/main/raw_data/fx_hist_data/DAT_ASCII_EURUSD_T_202001.csv.gz" )
     load_fx_hist_data(
-        filename=RAW_DATA_DIR / "fx_hist_data/DAT_ASCII_EURUSD_T_202001.csv.gz",
+        filename="DAT_ASCII_EURUSD_T_202001",
         currency="EUR/USD",
-        catalog_path=CATALOG_DIR / "EUDUSD202001",
+        catalog_path="EUDUSD202001",
     )
+
+
+if __name__ == "__main__":
+    main()
