@@ -82,9 +82,9 @@ def main():
         "https://raw.githubusercontent.com/nautechsystems/nautilus_data/main/raw_data/fx_hist_data/DAT_ASCII_EURUSD_T_202001.csv.gz"
     )
     load_fx_hist_data(
-        filename="DAT_ASCII_EURUSD_T_202001",
+        filename="DAT_ASCII_EURUSD_T_202001*.csv.gz",
         currency="EUR/USD",
-        catalog_path="EUDUSD202001",
+        catalog_path="EURUSD202001",
     )
 
 
