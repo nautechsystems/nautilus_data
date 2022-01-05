@@ -62,6 +62,7 @@ def load_fx_hist_data(filename: str, currency: str, catalog_path: str):
         glob_path=filename,
         reader=TextReader(line_parser=partial(parser, instrument_id=instrument.id)),
         catalog=catalog,
+        block_size="10mb",
     )
     # manually write the instrument to the catalog
     write_objects(catalog, [instrument])
@@ -69,14 +70,17 @@ def load_fx_hist_data(filename: str, currency: str, catalog_path: str):
 
 def download(url):
     import requests
+
     filename = url.rsplit("/", maxsplit=1)[1]
-    with open(filename, 'wb') as f:
+    with open(filename, "wb") as f:
         f.write(requests.get(url).content)
 
 
 def main():
     # Download raw data
-    download("https://raw.githubusercontent.com/nautechsystems/nautilus_data/main/raw_data/fx_hist_data/DAT_ASCII_EURUSD_T_202001.csv.gz" )
+    download(
+        "https://raw.githubusercontent.com/nautechsystems/nautilus_data/main/raw_data/fx_hist_data/DAT_ASCII_EURUSD_T_202001.csv.gz"
+    )
     load_fx_hist_data(
         filename="DAT_ASCII_EURUSD_T_202001",
         currency="EUR/USD",
