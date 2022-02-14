@@ -15,7 +15,7 @@ from nautilus_trader.persistence.catalog import DataCatalog
 from nautilus_trader.persistence.external.core import process_files, write_objects
 from nautilus_trader.persistence.external.readers import TextReader
 
-ROOT = Path(__file__).parent.parent
+ROOT = os.environ.get("NAUTILUS_ROOT") or Path(__file__).parent.parent
 CATALOG_DIR = ROOT / "catalogs"
 RAW_DATA_DIR = ROOT / "raw_data"
 
