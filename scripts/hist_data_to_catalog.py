@@ -15,20 +15,8 @@ from nautilus_trader.persistence.catalog import DataCatalog
 from nautilus_trader.persistence.external.core import process_files, write_objects
 from nautilus_trader.persistence.external.readers import TextReader
 
-ROOT = os.environ.get("NAUTILUS_ROOT") or Path(__file__).parent.parent
-CATALOG_DIR = ROOT / "catalogs"
-RAW_DATA_DIR = ROOT / "raw_data"
-
-
-def tar_dir(path: Path):
-    assert isinstance(path, Path)
-    with tarfile.open(f"{path.parent}/{path.stem}.tar.gz", "w:gz") as archive:
-        archive.add(str(path), arcname=path.stem, recursive=True)
-
-
-def remove_catalog_path(catalog_path: str):
-    if os.path.exists(catalog_path):
-        shutil.rmtree(catalog_path)
+ROOT = os.environ.get("CATALOG_PATH") or Path(__file__).parent.parent
+RAW_DATA_DIR = Path(ROOT) / "raw_data"
 
 
 def parser(line, instrument_id: InstrumentId):
@@ -46,13 +34,6 @@ def parser(line, instrument_id: InstrumentId):
         ts_event=ts,
         ts_init=ts,
     )
-
-
-def remove_existing_catalog(catalog_path: str):
-    full_path = catalog_path + "/catalog"
-    # Clear if it already exists, then create fresh
-    remove_catalog_path(full_path)
-    os.mkdir(full_path)
 
 
 def load_fx_hist_data(filename: str, currency: str, catalog_path: str):
@@ -84,7 +65,7 @@ def main():
     load_fx_hist_data(
         filename="DAT_ASCII_EURUSD_T_202001*.csv.gz",
         currency="EUR/USD",
-        catalog_path="EURUSD202001",
+        catalog_path=str(ROOT),
     )
 
 
