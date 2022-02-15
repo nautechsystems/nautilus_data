@@ -33,11 +33,11 @@ RUN poetry install
 #COPY --from=builder $PYSETUP_PATH $PYSETUP_PATH
 #WORKDIR $PYSETUP_PATH/nautilus_data
 
-# Copy raw data
-#COPY ./catalogs/EUDUSD202001 /catalog
-#ENV CATALOG_PATH=/catalog
 COPY ./scripts ./nautilus_data/scripts
+ENV CATALOG_PATH=/catalog
+
+# Generate data catalog
 RUN poetry run python -m scripts.hist_data_to_catalog
 
 # Run backtest to generate data
-RUN (cd nautilus_data && poetry run python -m scripts.example_backtest)
+RUN poetry run python -m scripts.example_backtest

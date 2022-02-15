@@ -62,7 +62,7 @@ if __name__ == "__main__":
 
     config = base.update(
         data=data_config,
-        engine=BacktestEngineConfig(),
+        engine=BacktestEngineConfig(bypass_logging=True),
         strategies=[
             ImportableStrategyConfig(
                 path="nautilus_trader.examples.strategies.ema_cross:EMACross",
