@@ -37,7 +37,7 @@ jobs:
         id: docker_build_backend
         uses: docker/build-push-action@v2
         with:
-          file: "./nautilus_server/Dockerfile"
+          file: "Dockerfile"
           push: true
 #          load: true
           tags: ghcr.io/${{ github.repository_owner }}/nautilus_backend:${{ steps.branch-name.outputs.head_ref_branch }}
