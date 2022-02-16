@@ -31,16 +31,16 @@ jobs:
         id: branch-name
 
       - name: image name
-        run: echo ghcr.io/${{ github.repository_owner }}/nautilus_backend:${{ steps.branch-name.outputs.current_branch }}
+        run: echo ghcr.io/${{ github.repository }}:${{ steps.branch-name.outputs.current_branch }}
 
       - name: Build backend
-        id: docker_build_backend
+        id: docker_build
         uses: docker/build-push-action@v2
         with:
           file: "Dockerfile"
           push: true
 #          load: true
-          tags: ghcr.io/${{ github.repository_owner }}/nautilus_backend:${{ steps.branch-name.outputs.current_branch }}
+          tags: ghcr.io/${{ github.repository }}:${{ steps.branch-name.outputs.current_branch }}
           cache-from: type=gha
           cache-to: type=gha
 
