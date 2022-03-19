@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautilus_data"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Bradley McElroy <bradley.mcelroy@live.com>"]
 
@@ -11,5 +11,5 @@ nautilus_trader = {git = "https://github.com/nautechsystems/nautilus_trader.git"
 [tool.poetry.dev-dependencies]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.8"]
 build-backend = "poetry.core.masonry.api"

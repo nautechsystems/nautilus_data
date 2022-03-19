@@ -11,9 +11,9 @@ from nautilus_trader.core.datetime import dt_to_unix_nanos
 from nautilus_trader.model.data.tick import QuoteTick
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.objects import Price, Quantity
-from nautilus_trader.persistence.catalog import DataCatalog
 from nautilus_trader.persistence.external.core import process_files, write_objects
 from nautilus_trader.persistence.external.readers import TextReader
+from nautilus_trader.persistence.catalog import DataCatalog
 
 ROOT = os.environ.get("CATALOG_PATH") or Path(__file__).parent.parent
 RAW_DATA_DIR = Path(ROOT) / "raw_data"

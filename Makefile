@@ -4,7 +4,7 @@ IMAGE?= 				${REGISTRY}${PROJECT}
 GIT_TAG:= 				$(shell git rev-parse --abbrev-ref HEAD)
 IMAGE_FULL?=			${IMAGE}:${GIT_TAG}
 PYTHON_EXECUTABLE:= 	$(shell which python3)
-NAUTILUS_DATA:=			"${HOME}/.nautilus"
+NAUTILUS_PATH:=			"${HOME}/.nautilus"
 
 ########################################
 #  Docker development commands
@@ -17,7 +17,7 @@ docker-build-force:
 	(docker build --no-cache -t ${IMAGE_FULL} ./.. )
 
 docker-push:
-	(docker push ${BACKEND_IMAGE_FULL} )
+	(docker push ${IMAGE_FULL} )
 
 ########################################
 # Development commands
@@ -33,9 +33,6 @@ clean:
 	rm -rf .mypy_cache
 	rm -rf .nox
 	rm -rf .pytest_cache
-	rm -rf nautilus_platform/.mypy_cache
-	rm -rf nautilus_platform/.nox
-	rm -rf nautilus_platform/.pytest_cache
 	rm -rf build
 	rm -rf dist
 	rm -rf docs/build

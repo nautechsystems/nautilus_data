@@ -16,8 +16,12 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 FROM base as builder
 WORKDIR $PYSETUP_PATH
 
+# Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
+RUN curl -sSL https://install.python-poetry.org | python3 -
+ENV PATH="$POETRY_HOME/bin:$PATH"
+
 # Install python dependencies
-RUN python -m pip install --upgrade pip setuptools wheel poetry
+RUN python -m pip install --upgrade pip setuptools wheel
 
 # Install build deps
 RUN apt-get update && apt-get install -y gcc

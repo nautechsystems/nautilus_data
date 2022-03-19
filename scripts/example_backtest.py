@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
+
 import os
 import pathlib
 from decimal import Decimal
@@ -23,6 +24,8 @@ from nautilus_trader.backtest.config import BacktestRunConfig
 from nautilus_trader.backtest.config import BacktestVenueConfig
 from nautilus_trader.backtest.node import BacktestNode
 from nautilus_trader.examples.strategies.ema_cross import EMACrossConfig
+from nautilus_trader.examples.strategies.ema_cross import EMACross
+from nautilus_trader.model.data.tick import QuoteTick
 from nautilus_trader.persistence.catalog import DataCatalog
 from nautilus_trader.persistence.config import PersistenceConfig
 from nautilus_trader.trading.config import ImportableStrategyConfig
@@ -35,7 +38,7 @@ if __name__ == "__main__":
     )
     catalog = DataCatalog(CATALOG_PATH)
 
-    # Create a `base` config object to be shared with all backtests
+    # Create a `base` backtest run config object to be shared with all backtests
     base = BacktestRunConfig(
         venues=[
             BacktestVenueConfig(
@@ -53,7 +56,7 @@ if __name__ == "__main__":
     data_config = [
         BacktestDataConfig(
             catalog_path=CATALOG_PATH,
-            data_cls_path="nautilus_trader.model.data.tick.QuoteTick",
+            data_cls=QuoteTick,
             instrument_id=instrument.id.value,
             start_time=1580398089820000000,
             end_time=1580504394501000000,
@@ -65,7 +68,7 @@ if __name__ == "__main__":
         engine=BacktestEngineConfig(bypass_logging=True),
         strategies=[
             ImportableStrategyConfig(
-                path="nautilus_trader.examples.strategies.ema_cross:EMACross",
+                path=EMACross.fully_qualified_name(),
                 config=EMACrossConfig(
                     instrument_id=str(instrument.id),
                     bar_type="EUR/USD.SIM-1-MINUTE-MID-INTERNAL",
