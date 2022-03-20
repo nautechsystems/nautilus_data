@@ -44,4 +44,4 @@ ENV CATALOG_PATH=/catalog
 RUN poetry run python -m scripts.hist_data_to_catalog
 
 # Run backtest to generate data
-RUN poetry run python -m scripts.example_backtest
+#RUN poetry run python -m scripts.example_backtest
