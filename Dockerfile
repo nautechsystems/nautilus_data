@@ -1,9 +1,10 @@
-FROM python:3.9 as base
+FROM python:3.10 as base
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
+    POETRY_VERSION=1.1.13 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     POETRY_NO_INTERACTION=1 \
@@ -16,15 +17,15 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 FROM base as builder
 WORKDIR $PYSETUP_PATH
 
+# Install build deps
+RUN apt-get update && apt-get install -y gcc curl
+
 # Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
 # Install python dependencies
 RUN python -m pip install --upgrade pip setuptools wheel
-
-# Install build deps
-RUN apt-get update && apt-get install -y gcc
 
 ## We copy our Python requirements here to cache them and install only runtime deps using poetry
 WORKDIR $PYSETUP_PATH
