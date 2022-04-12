@@ -18,24 +18,19 @@ import os
 import pathlib
 from decimal import Decimal
 
-from nautilus_trader.backtest.config import BacktestDataConfig
-from nautilus_trader.backtest.config import BacktestEngineConfig
-from nautilus_trader.backtest.config import BacktestRunConfig
-from nautilus_trader.backtest.config import BacktestVenueConfig
 from nautilus_trader.backtest.node import BacktestNode
-from nautilus_trader.examples.strategies.ema_cross import EMACrossConfig
+from nautilus_trader.config.backtest import BacktestDataConfig
+from nautilus_trader.config.backtest import BacktestEngineConfig
+from nautilus_trader.config.backtest import BacktestRunConfig
+from nautilus_trader.config.backtest import BacktestVenueConfig
+from nautilus_trader.config.components import ImportableStrategyConfig
+from nautilus_trader.config.persistence import PersistenceConfig
 from nautilus_trader.examples.strategies.ema_cross import EMACross
 from nautilus_trader.model.data.tick import QuoteTick
 from nautilus_trader.persistence.catalog import DataCatalog
-from nautilus_trader.persistence.config import PersistenceConfig
-from nautilus_trader.trading.config import ImportableStrategyConfig
-
 
 if __name__ == "__main__":
-
-    CATALOG_PATH = os.environ.get("CATALOG_PATH") or str(
-        pathlib.Path("../catalogs/EUDUSD202001").resolve()
-    )
+    CATALOG_PATH = os.environ.get("CATALOG_PATH") or str(pathlib.Path("../").resolve())
     catalog = DataCatalog(CATALOG_PATH)
 
     # Create a `base` backtest run config object to be shared with all backtests
@@ -65,22 +60,25 @@ if __name__ == "__main__":
 
     config = base.update(
         data=data_config,
-        engine=BacktestEngineConfig(bypass_logging=True),
-        strategies=[
-            ImportableStrategyConfig(
-                path=EMACross.fully_qualified_name(),
-                config=EMACrossConfig(
-                    instrument_id=str(instrument.id),
-                    bar_type="EUR/USD.SIM-1-MINUTE-MID-INTERNAL",
-                    fast_ema_period=10,
-                    slow_ema_period=20,
-                    trade_size=Decimal(1_000_000),
-                    order_id_tag="001",
+        engine=BacktestEngineConfig(
+            bypass_logging=True,
+            strategies=[
+                ImportableStrategyConfig(
+                    strategy_path=EMACross.fully_qualified_name(),
+                    config_path="nautilus_trader.examples.strategies.ema_cross:EMACrossConfig",
+                    config=dict(
+                        instrument_id=str(instrument.id),
+                        bar_type="EUR/USD.SIM-1-MINUTE-MID-INTERNAL",
+                        fast_ema_period=10,
+                        slow_ema_period=20,
+                        trade_size=Decimal(1_000_000),
+                        order_id_tag="001",
+                    ),
                 ),
-            ),
-        ],
-        persistence=PersistenceConfig(catalog_path=CATALOG_PATH, kind="backtest"),
+            ],
+            persistence=PersistenceConfig(catalog_path=CATALOG_PATH),
+        ),
     )
 
     node = BacktestNode()
-    node.run_sync([config])
+    node.run([config])
