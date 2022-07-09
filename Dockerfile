@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED=1 \
     PYSETUP_PATH="/opt/pysetup" \
     VENV_PATH="/opt/pysetup/.venv"
 USER root
-ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
+ENV PATH="/root/.cargo/bin:$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
 # builder is used to build dependencies (nautilus_trader)
 FROM base as builder
