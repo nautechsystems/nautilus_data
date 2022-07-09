@@ -20,9 +20,11 @@ WORKDIR $PYSETUP_PATH
 # Install build deps
 RUN apt-get update && apt-get install -y gcc curl
 
+# Install Rust stable
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+
 # Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
 RUN curl -sSL https://install.python-poetry.org | python3 -
-ENV PATH="$POETRY_HOME/bin:$PATH"
 
 # Install python dependencies
 RUN python -m pip install --upgrade pip setuptools wheel
