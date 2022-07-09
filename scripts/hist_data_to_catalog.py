@@ -10,7 +10,7 @@ from nautilus_trader.core.datetime import dt_to_unix_nanos
 from nautilus_trader.model.data.tick import QuoteTick
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.objects import Price, Quantity
-from nautilus_trader.persistence.catalog import DataCatalog
+from nautilus_trader.persistence.catalog import ParquetDataCatalog
 from nautilus_trader.persistence.external.core import process_files, write_objects
 from nautilus_trader.persistence.external.readers import TextReader
 
@@ -35,7 +35,7 @@ def parser(line, instrument_id: InstrumentId):
 
 def load_fx_hist_data(filename: str, currency: str, catalog_path: str):
     instrument = TestInstrumentProvider.default_fx_ccy(currency)
-    catalog = DataCatalog(catalog_path)
+    catalog = ParquetDataCatalog(catalog_path)
     process_files(
         glob_path=filename,
         reader=TextReader(line_parser=partial(parser, instrument_id=instrument.id)),
