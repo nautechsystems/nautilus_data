@@ -1,21 +1,18 @@
-FROM python:3.10 as base
+FROM python:3.10-slim as base
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.1.13 \
+    POETRY_VERSION=1.2.2 \
     POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
+    POETRY_VIRTUALENVS_CREATE=false \
     POETRY_NO_INTERACTION=1 \
-    PYSETUP_PATH="/opt/pysetup" \
-    VENV_PATH="/opt/pysetup/.venv"
-USER root
-ENV PATH="/root/.cargo/bin:$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
-
-# builder is used to build dependencies (nautilus_trader)
-FROM base as builder
+    PYSETUP_PATH="/opt/pysetup"
+ENV PATH="/root/.cargo/bin:$POETRY_HOME/bin:$PATH"
 WORKDIR $PYSETUP_PATH
+
+FROM base as builder
 
 # Install build deps
 RUN apt-get update && apt-get install -y gcc curl
@@ -23,28 +20,25 @@ RUN apt-get update && apt-get install -y gcc curl
 # Install Rust stable
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 
-# Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
+# Install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
-# Install python dependencies
-RUN python -m pip install --upgrade pip setuptools wheel
-
-## We copy our Python requirements here to cache them and install only runtime deps using poetry
-WORKDIR $PYSETUP_PATH
-COPY ./poetry.lock ./pyproject.toml ./
-RUN  poetry install --no-root
-COPY . .
+# Install project
+COPY pyproject.toml poetry.lock ./
+RUN poetry install --no-root
+COPY . ./
 RUN poetry install
 
-#FROM base as production
-#COPY --from=builder $PYSETUP_PATH $PYSETUP_PATH
-#WORKDIR $PYSETUP_PATH/nautilus_data
+FROM base as application
 
-COPY ./scripts ./nautilus_data/scripts
 ENV CATALOG_PATH=/catalog
 
+# Copy python environment from builder
+COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+COPY ./scripts $PYSETUP_PATH/scripts
+
 # Generate data catalog
-RUN poetry run python -m scripts.hist_data_to_catalog
+RUN python -m scripts.hist_data_to_catalog
 
 # Run backtest to generate data
-#RUN poetry run python -m scripts.example_backtest
+#RUN python -m scripts.example_backtest
