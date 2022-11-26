@@ -18,12 +18,10 @@ from decimal import Decimal
 
 from nautilus_trader.backtest.node import BacktestNode
 from nautilus_trader.config import ImportableStrategyConfig, StreamingConfig
-from nautilus_trader.config.backtest import (
-    BacktestDataConfig,
-    BacktestEngineConfig,
-    BacktestRunConfig,
-    BacktestVenueConfig,
-)
+from nautilus_trader.config.backtest import BacktestDataConfig
+from nautilus_trader.config.backtest import BacktestEngineConfig
+from nautilus_trader.config.backtest import BacktestRunConfig
+from nautilus_trader.config.backtest import BacktestVenueConfig
 from nautilus_trader.examples.strategies.ema_cross import EMACross
 from nautilus_trader.model.data.tick import QuoteTick
 from nautilus_trader.persistence.catalog import ParquetDataCatalog
