@@ -1,10 +1,11 @@
 import os
-from pathlib import Path
 import shutil
 import tarfile
+from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
-CATALOG_DIR = ROOT / "catalogs"
+CATALOG_DIR = ROOT / "catalog"
+CATALOG_DIR.mkdir(exist_ok=True)
 RAW_DATA_DIR = ROOT / "raw_data"
 
 

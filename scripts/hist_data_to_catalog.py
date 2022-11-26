@@ -1,10 +1,8 @@
 import datetime
-import os
 from functools import partial
-from pathlib import Path
 
-import requests
 import pandas as pd
+import requests
 from nautilus_trader.backtest.data.providers import TestInstrumentProvider
 from nautilus_trader.core.datetime import dt_to_unix_nanos
 from nautilus_trader.model.data.tick import QuoteTick
@@ -14,13 +12,15 @@ from nautilus_trader.persistence.catalog import ParquetDataCatalog
 from nautilus_trader.persistence.external.core import process_files, write_objects
 from nautilus_trader.persistence.external.readers import TextReader
 
-ROOT = os.environ.get("CATALOG_PATH") or Path(__file__).parent.parent
-RAW_DATA_DIR = Path(ROOT) / "raw_data"
+from scripts.util import CATALOG_DIR
 
 
 def parser(line, instrument_id: InstrumentId):
     ts, bid, ask, idx = line.split(b",")
-    dt = pd.Timestamp(datetime.datetime.strptime(ts.decode(), "%Y%m%d %H%M%S%f"), tz="UTC")
+    dt = pd.Timestamp(
+        datetime.datetime.strptime(ts.decode(), "%Y%m%d %H%M%S%f"),
+        tz="UTC",
+    )
     ts = dt_to_unix_nanos(dt)
     yield QuoteTick(
         instrument_id=instrument_id,
@@ -56,12 +56,12 @@ def download(url):
 def main():
     # Download raw data
     download(
-        "https://raw.githubusercontent.com/nautechsystems/nautilus_data/main/raw_data/fx_hist_data/DAT_ASCII_EURUSD_T_202001.csv.gz"
+        "https://raw.githubusercontent.com/nautechsystems/nautilus_data/main/raw_data/fx_hist_data/DAT_ASCII_EURUSD_T_202001.csv.gz",
     )
     load_fx_hist_data(
         filename="DAT_ASCII_EURUSD_T_202001*.csv.gz",
         currency="EUR/USD",
-        catalog_path=str(ROOT),
+        catalog_path=str(CATALOG_DIR),
     )
 
 
