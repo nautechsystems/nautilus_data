@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -------------------------------------------------------------------------------------------------
 #  Copyright (C) 2015-2022 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
@@ -15,23 +14,25 @@
 # -------------------------------------------------------------------------------------------------
 
 import os
-import pathlib
 from decimal import Decimal
 
 from nautilus_trader.backtest.node import BacktestNode
-from nautilus_trader.config.backtest import BacktestDataConfig
-from nautilus_trader.config.backtest import BacktestEngineConfig
-from nautilus_trader.config.backtest import BacktestRunConfig
-from nautilus_trader.config.backtest import BacktestVenueConfig
-from nautilus_trader.config.components import ImportableStrategyConfig
-from nautilus_trader.config.persistence import PersistenceConfig
+from nautilus_trader.config import ImportableStrategyConfig, StreamingConfig
+from nautilus_trader.config.backtest import (
+    BacktestDataConfig,
+    BacktestEngineConfig,
+    BacktestRunConfig,
+    BacktestVenueConfig,
+)
 from nautilus_trader.examples.strategies.ema_cross import EMACross
 from nautilus_trader.model.data.tick import QuoteTick
-from nautilus_trader.persistence.catalog import DataCatalog
+from nautilus_trader.persistence.catalog import ParquetDataCatalog
+
+from scripts.util import CATALOG_DIR
 
 if __name__ == "__main__":
-    CATALOG_PATH = os.environ.get("CATALOG_PATH") or str(pathlib.Path("../").resolve())
-    catalog = DataCatalog(CATALOG_PATH)
+    CATALOG_PATH = os.environ.get("CATALOG_PATH", str(CATALOG_DIR))
+    catalog = ParquetDataCatalog(CATALOG_PATH)
 
     # Create a `base` backtest run config object to be shared with all backtests
     base = BacktestRunConfig(
@@ -42,8 +43,8 @@ if __name__ == "__main__":
                 account_type="MARGIN",
                 base_currency="USD",
                 starting_balances=["1000000 USD"],
-            )
-        ]
+            ),
+        ],
     )
 
     instrument = catalog.instruments(as_nautilus=True)[0]
@@ -55,7 +56,7 @@ if __name__ == "__main__":
             instrument_id=instrument.id.value,
             start_time=1580398089820000000,
             end_time=1580504394501000000,
-        )
+        ),
     ]
 
     config = base.update(
@@ -76,9 +77,9 @@ if __name__ == "__main__":
                     ),
                 ),
             ],
-            persistence=PersistenceConfig(catalog_path=CATALOG_PATH),
+            streaming=StreamingConfig(catalog_path=CATALOG_PATH),
         ),
     )
 
-    node = BacktestNode()
-    node.run([config])
+    node = BacktestNode([config])
+    node.run()
