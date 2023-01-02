@@ -27,7 +27,7 @@ from nautilus_trader.persistence.catalog import ParquetDataCatalog
 from nautilus_trader.persistence.external.core import process_files, write_objects
 from nautilus_trader.persistence.external.readers import TextReader
 
-from scripts.util import CATALOG_DIR
+from util import CATALOG_DIR
 
 
 def parser(line, instrument_id: InstrumentId):

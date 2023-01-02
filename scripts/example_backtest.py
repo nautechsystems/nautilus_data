@@ -26,7 +26,8 @@ from nautilus_trader.examples.strategies.ema_cross import EMACross
 from nautilus_trader.model.data.tick import QuoteTick
 from nautilus_trader.persistence.catalog import ParquetDataCatalog
 
-from scripts.util import CATALOG_DIR
+from util import CATALOG_DIR
+
 
 if __name__ == "__main__":
     CATALOG_PATH = os.environ.get("CATALOG_PATH", str(CATALOG_DIR))
