@@ -27,8 +27,6 @@ from nautilus_trader.persistence.catalog import ParquetDataCatalog
 from nautilus_trader.persistence.external.core import process_files, write_objects
 from nautilus_trader.persistence.external.readers import TextReader
 
-from util import CATALOG_DIR
-
 
 def parser(line, instrument_id: InstrumentId):
     ts, bid, ask, idx = line.split(b",")
@@ -76,7 +74,7 @@ def main():
     load_fx_hist_data(
         filename="DAT_ASCII_EURUSD_T_202001*.csv.gz",
         currency="EUR/USD",
-        catalog_path=str(CATALOG_DIR),
+        catalog_path="catalog",
     )
 
 
