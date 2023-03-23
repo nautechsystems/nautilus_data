@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.2.2 \
+    POETRY_VERSION=1.3.2 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_NO_INTERACTION=1 \
@@ -15,7 +15,7 @@ WORKDIR $PYSETUP_PATH
 FROM base as builder
 
 # Install build deps
-RUN apt-get update && apt-get install -y gcc curl
+RUN apt-get update && apt-get install -y clang curl
 
 # Install Rust stable
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -25,7 +25,7 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Install project
 COPY pyproject.toml poetry.lock ./
-RUN poetry install --no-root
+RUN poetry install --only main
 COPY . ./
 RUN poetry install
 

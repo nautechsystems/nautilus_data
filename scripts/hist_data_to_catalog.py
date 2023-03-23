@@ -18,14 +18,15 @@ from functools import partial
 
 import pandas as pd
 import requests
-from nautilus_trader.backtest.data.providers import TestInstrumentProvider
 from nautilus_trader.core.datetime import dt_to_unix_nanos
 from nautilus_trader.model.data.tick import QuoteTick
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.objects import Price, Quantity
 from nautilus_trader.persistence.catalog import ParquetDataCatalog
-from nautilus_trader.persistence.external.core import process_files, write_objects
+from nautilus_trader.persistence.external.core import (process_files,
+                                                       write_objects)
 from nautilus_trader.persistence.external.readers import TextReader
+from nautilus_trader.test_kit.providers import TestInstrumentProvider
 
 
 def parser(line, instrument_id: InstrumentId):
@@ -60,7 +61,6 @@ def load_fx_hist_data(filename: str, currency: str, catalog_path: str):
 
 
 def download(url):
-
     filename = url.rsplit("/", maxsplit=1)[1]
     with open(filename, "wb") as f:
         f.write(requests.get(url).content)
