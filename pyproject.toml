@@ -8,6 +8,7 @@ authors = ["Nautech Systems <info@nautechsystems.io>"]
 python = ">=3.9, <3.11"
 nautilus_trader = ">=1.176.0"
 requests = "^2.31"
+betfair_parser = "==0.4.6"
 
 [build-system]
 requires = ["poetry-core>=1.6.1"]
