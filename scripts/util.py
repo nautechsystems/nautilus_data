@@ -1,4 +1,3 @@
-
 # -------------------------------------------------------------------------------------------------
 #  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
@@ -18,6 +17,7 @@ import os
 import shutil
 import tarfile
 from pathlib import Path
+
 
 ROOT = Path(__file__).parent.parent
 CATALOG_DIR = ROOT / "catalog"
