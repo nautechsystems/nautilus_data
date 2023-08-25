@@ -39,8 +39,8 @@ def parser(line: bytes, instrument_id: InstrumentId) -> QuoteTick:
     ts = dt_to_unix_nanos(dt)
     yield QuoteTick(
         instrument_id=instrument_id,
-        bid=Price.from_str(bid.decode()),
-        ask=Price.from_str(ask.decode()),
+        bid_price=Price.from_str(bid.decode()),
+        ask_price=Price.from_str(ask.decode()),
         bid_size=Quantity.from_int(100_000),
         ask_size=Quantity.from_int(100_000),
         ts_event=ts,
