@@ -1,17 +1,16 @@
 [tool.poetry]
 name = "nautilus_data"
-version = "0.6.0"
+version = "0.7.0"
 description = ""
 authors = ["Nautech Systems <info@nautechsystems.io>"]
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.11"
-nautilus_trader = ">=1.176.0"
+nautilus_trader = ">=1.177.0"
 requests = "^2.31"
-betfair_parser = "==0.4.6"
 
 [build-system]
-requires = ["poetry-core>=1.6.1"]
+requires = ["poetry-core>=1.7.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]

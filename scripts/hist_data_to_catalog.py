@@ -30,8 +30,8 @@ from nautilus_trader.persistence.external.readers import TextReader
 from nautilus_trader.test_kit.providers import TestInstrumentProvider
 
 
-def parser(line, instrument_id: InstrumentId):
-    ts, bid, ask, idx = line.split(b",")
+def parser(line: bytes, instrument_id: InstrumentId) -> QuoteTick:
+    ts, bid, ask, _ = line.split(b",")
     dt = pd.Timestamp(
         datetime.datetime.strptime(ts.decode(), "%Y%m%d %H%M%S%f"),
         tz="UTC",
@@ -48,7 +48,7 @@ def parser(line, instrument_id: InstrumentId):
     )
 
 
-def load_fx_hist_data(filename: str, currency: str, catalog_path: str):
+def load_fx_hist_data(filename: str, currency: str, catalog_path: str) -> None:
     instrument = TestInstrumentProvider.default_fx_ccy(currency)
     catalog = ParquetDataCatalog(catalog_path)
     process_files(
@@ -61,7 +61,7 @@ def load_fx_hist_data(filename: str, currency: str, catalog_path: str):
     write_objects(catalog, [instrument])
 
 
-def download(url):
+def download(url: str) -> None:
     filename = url.rsplit("/", maxsplit=1)[1]
     with open(filename, "wb") as f:
         f.write(requests.get(url).content)
