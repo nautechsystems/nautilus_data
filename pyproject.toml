@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "nautilus_data"
-version = "0.7.0"
+version = "0.8.0"
 description = ""
 authors = ["Nautech Systems <info@nautechsystems.io>"]
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.11"
-nautilus_trader = ">=1.177.0"
+nautilus_trader = { git = "https://github.com/nautechsystems/nautilus_trader.git", branch = "develop" }
 requests = "^2.31"
 
 [build-system]
