@@ -34,7 +34,7 @@ if __name__ == "__main__":
     CATALOG_PATH = os.environ.get("CATALOG_PATH", str(CATALOG_DIR))
     catalog = ParquetDataCatalog(CATALOG_PATH)
 
-    instrument = catalog.instruments(as_nautilus=True)[0]
+    instrument = catalog.instruments()[0]
 
     config = BacktestRunConfig(
         data=[

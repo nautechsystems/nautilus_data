@@ -13,52 +13,26 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
-import datetime
-from functools import partial
-
-import pandas as pd
 import requests
-from nautilus_trader.core.datetime import dt_to_unix_nanos
-from nautilus_trader.model.data.tick import QuoteTick
-from nautilus_trader.model.identifiers import InstrumentId
-from nautilus_trader.model.objects import Price
-from nautilus_trader.model.objects import Quantity
 from nautilus_trader.persistence.catalog import ParquetDataCatalog
-from nautilus_trader.persistence.external.core import process_files
-from nautilus_trader.persistence.external.core import write_objects
-from nautilus_trader.persistence.external.readers import TextReader
+from nautilus_trader.persistence.wranglers import QuoteTickDataWrangler
+from nautilus_trader.test_kit.providers import CSVTickDataLoader
 from nautilus_trader.test_kit.providers import TestInstrumentProvider
-
-
-def parser(line: bytes, instrument_id: InstrumentId) -> QuoteTick:
-    ts, bid, ask, _ = line.split(b",")
-    dt = pd.Timestamp(
-        datetime.datetime.strptime(ts.decode(), "%Y%m%d %H%M%S%f"),
-        tz="UTC",
-    )
-    ts = dt_to_unix_nanos(dt)
-    yield QuoteTick(
-        instrument_id=instrument_id,
-        bid_price=Price.from_str(bid.decode()),
-        ask_price=Price.from_str(ask.decode()),
-        bid_size=Quantity.from_int(100_000),
-        ask_size=Quantity.from_int(100_000),
-        ts_event=ts,
-        ts_init=ts,
-    )
 
 
 def load_fx_hist_data(filename: str, currency: str, catalog_path: str) -> None:
     instrument = TestInstrumentProvider.default_fx_ccy(currency)
+    wrangler = QuoteTickDataWrangler(instrument)
+
+    df = CSVTickDataLoader.load(filename, index_col=0, format="%Y%m%d %H%M%S%f")
+    df.columns = ["timestamp", "bid_price", "ask_price"]
+    print(df)
+
+    ticks = wrangler.process(df)
+
     catalog = ParquetDataCatalog(catalog_path)
-    process_files(
-        glob_path=filename,
-        reader=TextReader(line_parser=partial(parser, instrument_id=instrument.id)),
-        catalog=catalog,
-        block_size="10mb",
-    )
-    # manually write the instrument to the catalog
-    write_objects(catalog, [instrument])
+    catalog.write_data([instrument])
+    catalog.write_data(ticks)
 
 
 def download(url: str) -> None:

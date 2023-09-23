@@ -258,3 +258,4 @@ cython_debug/
 data/
 backtest/
 scripts/*.csv.gz
+*.csv.gz
