@@ -378,7 +378,7 @@ redis = ["hiredis (>=2.2.3,<3.0.0)", "redis (>=5.0.0,<6.0.0)"]
 type = "git"
 url = "https://github.com/nautechsystems/nautilus_trader.git"
 reference = "develop"
-resolved_reference = "aa368aa332f5102ad6b99c8556b215d5f8d8591d"
+resolved_reference = "5f93d890df6e545632839479dd8878157a13ad35"
 
 [[package]]
 name = "numpy"
