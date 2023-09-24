@@ -15,7 +15,7 @@ WORKDIR $PYSETUP_PATH
 FROM base as builder
 
 # Install build deps
-RUN apt-get update && apt-get install -y clang curl
+RUN apt-get update && apt-get install -y curl clang git libssl-dev make pkg-config
 
 # Install Rust stable
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -23,22 +23,37 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 # Install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
-# Install project
-COPY pyproject.toml poetry.lock ./
-RUN poetry install --only main
-COPY . ./
-RUN poetry install
+# Install project (revert to this up to 'base as application', once the data catalog is stable)
+# COPY pyproject.toml poetry.lock ./
+# RUN poetry install --only main
+# COPY . ./
+# RUN poetry install
+
+# Install package requirements (split step and with --no-root to enable caching)
+COPY poetry.lock pyproject.toml build.py ./
+RUN poetry install --no-root --only main
+
+# Build nautilus_trader
+COPY nautilus_core ./nautilus_core
+RUN (cd nautilus_core && cargo build --release)
+
+COPY nautilus_trader ./nautilus_trader
+COPY README.md ./
+RUN poetry install --only main --all-extras
+RUN poetry build -f wheel
+RUN python -m pip install ./dist/*whl --force
+RUN find /usr/local/lib/python3.11/site-packages -name "*.pyc" -exec rm -f {} \;
 
 FROM base as application
 
 ENV CATALOG_PATH=/catalog
 
 # Copy python environment from builder
-COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY ./scripts $PYSETUP_PATH/scripts
 
 # Generate data catalog
 RUN python -m scripts.hist_data_to_catalog
 
 # Run backtest to generate data
-#RUN python -m scripts.example_backtest
+RUN python -m scripts.example_backtest
