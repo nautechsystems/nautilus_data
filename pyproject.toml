@@ -5,7 +5,7 @@ description = ""
 authors = ["Nautech Systems <info@nautechsystems.io>"]
 
 [tool.poetry.dependencies]
-python = ">=3.9, <3.11"
+python = ">=3.9,<3.12"
 nautilus_trader = { git = "https://github.com/nautechsystems/nautilus_trader.git", branch = "develop" }
 requests = "^2.31"
 
