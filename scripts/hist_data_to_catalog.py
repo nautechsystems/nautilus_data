@@ -25,7 +25,7 @@ def load_fx_hist_data(filename: str, currency: str, catalog_path: str) -> None:
     wrangler = QuoteTickDataWrangler(instrument)
 
     df = CSVTickDataLoader.load(filename, index_col=0, format="%Y%m%d %H%M%S%f")
-    df.columns = ["timestamp", "bid_price", "ask_price"]
+    df.columns = ["bid_price", "ask_price", "size"]
     print(df)
 
     ticks = wrangler.process(df)
@@ -47,7 +47,7 @@ def main():
         "https://raw.githubusercontent.com/nautechsystems/nautilus_data/main/raw_data/fx_hist_data/DAT_ASCII_EURUSD_T_202001.csv.gz",
     )
     load_fx_hist_data(
-        filename="DAT_ASCII_EURUSD_T_202001*.csv.gz",
+        filename="DAT_ASCII_EURUSD_T_202001.csv.gz",
         currency="EUR/USD",
         catalog_path="catalog",
     )

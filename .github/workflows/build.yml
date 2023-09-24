@@ -1,6 +1,6 @@
 name: build
 
-# Build and test the NautilusTrader platform
+# Build and test the NautilusTrader example data image
 
 on:
   push:
@@ -10,7 +10,6 @@ on:
 
 jobs:
   docker-image:
-#    needs: [ build ]
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -39,18 +38,9 @@ jobs:
         with:
           file: "Dockerfile"
           push: true
-#          load: true
           tags: ghcr.io/${{ github.repository }}:${{ steps.branch-name.outputs.current_branch }}
           cache-from: type=gha
           cache-to: type=gha
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-
-#      - name: Build & push frontend
-#        id: docker_build_push_frontend
-#        uses: docker/build-push-action@v2
-#        with:
-#          file: "./frontend/Dockerfile"
-#          push: true
-#          tags: ghcr.io/${{ github.repository_owner }}/nautilus_frontend:${{ steps.branch-name.outputs.head_ref_branch }}
