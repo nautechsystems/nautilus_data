@@ -23,7 +23,7 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 # Install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
-# Install project (revert to this up to 'base as application', once the data catalog is stable)
+# Install project
 COPY pyproject.toml poetry.lock ./
 RUN poetry install --only main
 COPY . ./
