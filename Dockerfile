@@ -41,4 +41,4 @@ COPY ./scripts $PYSETUP_PATH/scripts
 RUN python -m scripts.hist_data_to_catalog
 
 # Run backtest to generate data
-# RUN python -m scripts.example_backtest
+RUN python -m scripts.example_backtest
