@@ -19,6 +19,8 @@ from nautilus_trader.persistence.wranglers import QuoteTickDataWrangler
 from nautilus_trader.test_kit.providers import CSVTickDataLoader
 from nautilus_trader.test_kit.providers import TestInstrumentProvider
 
+from nautilus_data.util import CATALOG_DIR
+
 
 def load_fx_hist_data(filename: str, currency: str, catalog_path: str) -> None:
     instrument = TestInstrumentProvider.default_fx_ccy(currency)
@@ -49,7 +51,7 @@ def main():
     load_fx_hist_data(
         filename="DAT_ASCII_EURUSD_T_202001.csv.gz",
         currency="EUR/USD",
-        catalog_path="catalog",
+        catalog_path=CATALOG_DIR,
     )
 
 

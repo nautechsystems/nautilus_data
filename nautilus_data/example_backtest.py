@@ -24,6 +24,7 @@ from nautilus_trader.config.backtest import BacktestEngineConfig
 from nautilus_trader.config.backtest import BacktestRunConfig
 from nautilus_trader.config.backtest import BacktestVenueConfig
 from nautilus_trader.examples.strategies.ema_cross import EMACross
+from nautilus_trader.model.data import BarType
 from nautilus_trader.model.data import QuoteTick
 from nautilus_trader.persistence.catalog import ParquetDataCatalog
 
@@ -38,9 +39,9 @@ if __name__ == "__main__":
     config = BacktestRunConfig(
         data=[
             BacktestDataConfig(
-                catalog_path=CATALOG_DIR,
+                catalog_path=CATALOG_DIR.as_posix(),
                 data_cls=QuoteTick,
-                instrument_id=instrument.id.value,
+                instrument_id=instrument.id,
                 start_time=1580398089820000000,
                 end_time=1580504394501000000,
             ),
@@ -61,8 +62,10 @@ if __name__ == "__main__":
                     strategy_path=EMACross.fully_qualified_name(),
                     config_path="nautilus_trader.examples.strategies.ema_cross:EMACrossConfig",
                     config={
-                        "instrument_id": str(instrument.id),
-                        "bar_type": "EUR/USD.SIM-1-MINUTE-MID-INTERNAL",
+                        "instrument_id": instrument.id,
+                        "bar_type": BarType.from_str(
+                            "EUR/USD.SIM-1-MINUTE-MID-INTERNAL",
+                        ),
                         "fast_ema_period": 10,
                         "slow_ema_period": 20,
                         "trade_size": Decimal(1_000_000),
@@ -70,7 +73,7 @@ if __name__ == "__main__":
                     },
                 ),
             ],
-            streaming=StreamingConfig(catalog_path=CATALOG_DIR),
+            streaming=StreamingConfig(catalog_path=CATALOG_DIR.as_posix()),
         ),
     )
 
