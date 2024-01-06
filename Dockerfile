@@ -35,10 +35,10 @@ ENV CATALOG_PATH=/catalog
 
 # Copy python environment from builder
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-COPY ./scripts $PYSETUP_PATH/scripts
+COPY ./nautilus_data $PYSETUP_PATH/nautilus_data
 
 # Generate data catalog
-RUN python -m scripts.hist_data_to_catalog
+RUN python -m nautilus_data.hist_data_to_catalog
 
 # Run backtest to generate data
-# RUN python -m scripts.example_backtest
+RUN python -m nautilus_data.example_backtest

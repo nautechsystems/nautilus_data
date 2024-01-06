@@ -1,0 +1,81 @@
+repos:
+  ##############################################################################
+  #  General checks
+  ##############################################################################
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: fix-encoding-pragma
+        args: [--remove]
+      - id: end-of-file-fixer
+        types_or: [python]
+      - id: trailing-whitespace
+        types_or: [python]
+      - id: debug-statements
+      - id: detect-private-key
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-xml
+      - id: check-yaml
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.4
+    hooks:
+      - id: codespell
+        description: Checks for common misspellings.
+        types_or: [python, cython, rst, markdown]
+
+  ##############################################################################
+  #  Python formatting and linting
+  ##############################################################################
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.4.0
+    hooks:
+      - id: add-trailing-comma
+        name: add-trailing-comma
+        types: [python]
+
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        types_or: [python, pyi]
+        entry: "black"
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.269
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.3.0
+    hooks:
+      - id: mypy
+        args: [--no-strict-optional, --ignore-missing-imports, --warn-no-return, --explicit-package-bases]
+        additional_dependencies: [types-pytz, types-redis, types-toml, types-requests, msgspec]
+        exclude: "nautilus_server/backend/api_v1/endpoints/models*"
+
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.6.1
+    hooks:
+      - id: nbstripout
+
+  ##############################################################################
+  #  Javascript formatting and linting
+  ##############################################################################
+  - repo: https://github.com/pre-commit/mirrors-jshint
+    rev: "v2.13.6"
+    hooks:
+      - id: jshint
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "v3.1.0"
+    hooks:
+      - id: prettier
+        args: ["--print-width", "160"]
