@@ -1,13 +1,12 @@
 [tool.poetry]
 name = "nautilus_data"
-version = "0.9.0"
+version = "0.10.0"
 description = ""
 authors = ["Nautech Systems <info@nautechsystems.io>"]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
-#nautilus_trader = { git = "https://github.com/nautechsystems/nautilus_trader.git", branch = "develop" }
-nautilus_trader = { version = "1.182.0" }
+nautilus_trader = { git = "https://github.com/nautechsystems/nautilus_trader.git", branch = "nightly" }
 requests = "^2.31"
 
 [build-system]
@@ -15,7 +14,7 @@ requires = ["poetry-core>=1.8.1"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 line-length = 100
 select = [
     "C4",
@@ -124,7 +123,7 @@ lines-after-imports = 2
 max-complexity = 10
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 disallow_incomplete_defs = true
 explicit_package_bases = true
 ignore_missing_imports = true
