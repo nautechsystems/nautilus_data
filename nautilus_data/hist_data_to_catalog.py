@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,16 +13,26 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+from os import PathLike
+from pathlib import Path
 import requests
+
 from nautilus_trader.persistence.catalog import ParquetDataCatalog
 from nautilus_trader.persistence.wranglers import QuoteTickDataWrangler
 from nautilus_trader.test_kit.providers import CSVTickDataLoader
 from nautilus_trader.test_kit.providers import TestInstrumentProvider
 
-from nautilus_data.util import CATALOG_DIR
+
+ROOT = Path(__file__).parent.parent
+CATALOG_DIR = ROOT / "catalog"
+CATALOG_DIR.mkdir(exist_ok=True)
 
 
-def load_fx_hist_data(filename: str, currency: str, catalog_path: str) -> None:
+def load_fx_hist_data(
+    filename: str,
+    currency: str,
+    catalog_path: PathLike[str] | str,
+) -> None:
     instrument = TestInstrumentProvider.default_fx_ccy(currency)
     wrangler = QuoteTickDataWrangler(instrument)
 
@@ -30,11 +40,15 @@ def load_fx_hist_data(filename: str, currency: str, catalog_path: str) -> None:
     df.columns = ["bid_price", "ask_price", "size"]
     print(df)
 
+    print("Preparing ticks...")
     ticks = wrangler.process(df)
 
+    print("Writing data to catalog...")
     catalog = ParquetDataCatalog(catalog_path)
     catalog.write_data([instrument])
     catalog.write_data(ticks)
+
+    print("Done")
 
 
 def download(url: str) -> None:

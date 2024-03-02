@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.7.1 \
+    POETRY_VERSION=1.8.1 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_NO_INTERACTION=1 \
@@ -39,6 +39,3 @@ COPY ./nautilus_data $PYSETUP_PATH/nautilus_data
 
 # Generate data catalog
 RUN python -m nautilus_data.hist_data_to_catalog
-
-# Run backtest to generate data
-RUN python -m nautilus_data.example_backtest
