@@ -36,7 +36,7 @@ def load_fx_hist_data(
     instrument = TestInstrumentProvider.default_fx_ccy(currency)
     wrangler = QuoteTickDataWrangler(instrument)
 
-    df = CSVTickDataLoader.load(filename, index_col=0, format="%Y%m%d %H%M%S%f")
+    df = CSVTickDataLoader.load(filename, index_col=0, datetime_format="%Y%m%d %H%M%S%f")
     df.columns = ["bid_price", "ask_price", "size"]
     print(df)
 
