@@ -229,3 +229,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Benchmarking data
+bench_data/*
