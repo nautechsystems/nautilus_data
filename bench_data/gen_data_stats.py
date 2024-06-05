@@ -1,6 +1,7 @@
-import sys
-import os
 import csv
+import os
+import sys
+
 import pyarrow.parquet as pq
 
 
@@ -9,7 +10,7 @@ def record_data_stats(folder_path, csv_file):
     with open(csv_file, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(
-            ["file_name", "file_size_kb", "total_rows", "max_row_group_size"]
+            ["file_name", "file_size_kb", "total_rows", "max_row_group_size"],
         )  # Write the header
 
         # Walk the folder
@@ -34,7 +35,9 @@ def record_data_stats(folder_path, csv_file):
                         max_row_group_size = max(max_row_group_size, num_rows)
 
                     # Write the statistics to the CSV file
-                    writer.writerow([file_path, file_size_kb, total_rows, max_row_group_size])
+                    writer.writerow(
+                        [file_path, file_size_kb, total_rows, max_row_group_size],
+                    )
 
 
 if __name__ == "__main__":

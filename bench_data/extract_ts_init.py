@@ -1,6 +1,7 @@
-import pyarrow.parquet as pq
 import csv
 import sys
+
+import pyarrow.parquet as pq
 
 
 def extract_ts_init_values(parquet_file, csv_file):
@@ -11,7 +12,9 @@ def extract_ts_init_values(parquet_file, csv_file):
     # Open the CSV file for writing
     with open(csv_file, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["index", "start_ts", "end_ts", "group_size"])  # Write the header
+        writer.writerow(
+            ["index", "start_ts", "end_ts", "group_size"],
+        )  # Write the header
 
         # Iterate over each row group in the Parquet file
         for i in range(parquet_file.num_row_groups):

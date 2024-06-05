@@ -3,7 +3,7 @@ repos:
   #  General checks
   ##############################################################################
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: fix-encoding-pragma
         args: [--remove]
@@ -24,7 +24,7 @@ repos:
       - id: check-yaml
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.6
+    rev: v2.3.0
     hooks:
       - id: codespell
         description: Checks for common misspellings.
@@ -41,20 +41,20 @@ repos:
         types: [python]
 
   - repo: https://github.com/psf/black
-    rev: 24.2.0
+    rev: 24.4.2
     hooks:
       - id: black
         types_or: [python, pyi]
         entry: "black"
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.3.0
+    rev: v0.4.7
     hooks:
       - id: ruff
         args: ["--fix"]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.8.0
+    rev: v1.10.0
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports, --warn-no-return, --explicit-package-bases]

@@ -1,9 +1,14 @@
 import sys
+
 import pandas as pd
 
 
 def check_file(file_name):
-    """Check if the 'start_ts' column is in ascending order and 'end_ts' for a row groups comes before 'start_ts' of the next row group."""
+    """
+    Check if the 'start_ts' column is in ascending order and 'end_ts' for a row
+    groups comes before 'start_ts' of the next row group.
+
+    """
     df = pd.read_csv(file_name)
 
     # Check if 'start_ts' is in ascending order
