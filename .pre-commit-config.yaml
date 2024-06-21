@@ -48,7 +48,7 @@ repos:
         entry: "black"
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.4.7
+    rev: v0.4.10
     hooks:
       - id: ruff
         args: ["--fix"]
