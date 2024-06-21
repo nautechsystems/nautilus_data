@@ -302,23 +302,24 @@ yaml = ["pyyaml"]
 
 [[package]]
 name = "nautilus-trader"
-version = "1.194.0"
+version = "1.195.0"
 description = "A high-performance algorithmic trading platform and event-driven backtester"
 optional = false
 python-versions = "<3.13,>=3.10"
 files = [
-    {file = "nautilus_trader-1.194.0-cp310-cp310-macosx_14_0_arm64.whl", hash = "sha256:b55f34c171aef0d8b8dda293f3837523da5e65f7c5280750e31626afb248f263"},
-    {file = "nautilus_trader-1.194.0-cp310-cp310-manylinux_2_31_x86_64.whl", hash = "sha256:0ca2c48cc0c7f56c1b01ee8a1aea2dd5a3753bfc251e31f3580901fbb94632fb"},
-    {file = "nautilus_trader-1.194.0-cp310-cp310-manylinux_2_35_x86_64.whl", hash = "sha256:d767efc2cbe68760549d569582038a7277b816c930308186babccf9f33549f75"},
-    {file = "nautilus_trader-1.194.0-cp311-cp311-macosx_14_0_arm64.whl", hash = "sha256:04cc756df70cd8bf0949ab8bc77f4bb1713e3b278922fb152e68673fb70d1cd6"},
-    {file = "nautilus_trader-1.194.0-cp311-cp311-manylinux_2_31_x86_64.whl", hash = "sha256:a04708fa5b7a6475fd0d2485e4b79a1211653841fa084bb4c3cf827a3a74cd18"},
-    {file = "nautilus_trader-1.194.0-cp311-cp311-manylinux_2_35_x86_64.whl", hash = "sha256:ea310e0f7b9145dc3c955c1543749a267baaa234ea5e29be0b5da9be358f6f7a"},
-    {file = "nautilus_trader-1.194.0-cp311-cp311-win_amd64.whl", hash = "sha256:caf773154ea2a807f2a9582cbd7f29e4d9fd950e35bb189317c927571d4c67d0"},
-    {file = "nautilus_trader-1.194.0-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:8a7e19154f6ae1afdfd8fca7ad60393ab1a6d2a3ac288057711f479bbe69ff07"},
-    {file = "nautilus_trader-1.194.0-cp312-cp312-manylinux_2_31_x86_64.whl", hash = "sha256:282137a80c485a525226956bfe33c85bfd28e0aed191f47062df56ffc1644918"},
-    {file = "nautilus_trader-1.194.0-cp312-cp312-manylinux_2_35_x86_64.whl", hash = "sha256:c45858bc41f469ffa614a924930942f23eb9ce6274e80226dc7fc4f594a94909"},
-    {file = "nautilus_trader-1.194.0-cp312-cp312-win_amd64.whl", hash = "sha256:39f177363748cdb53e22f2f82ec114dafd976bf94c032166aa18a9f8d71a9394"},
-    {file = "nautilus_trader-1.194.0.tar.gz", hash = "sha256:5ab2130d8554647763c9e766bcd30df9eda21d11ac4a4c1a0714e2d09afc22c9"},
+    {file = "nautilus_trader-1.195.0-cp310-cp310-macosx_14_0_arm64.whl", hash = "sha256:2e154558045d23601dbdb3ef3b79c045ce8daf26811a414c8ca48bf2329273a1"},
+    {file = "nautilus_trader-1.195.0-cp310-cp310-manylinux_2_31_x86_64.whl", hash = "sha256:f641c3759306ff5752c58a413c45b45c8fcd9bb9905e4567ae0c36dda9d15486"},
+    {file = "nautilus_trader-1.195.0-cp310-cp310-manylinux_2_35_x86_64.whl", hash = "sha256:2c2f5a925deb937c9f263acce0888c8cac4fb58057a61dff6f790f0dc367f2f6"},
+    {file = "nautilus_trader-1.195.0-cp310-cp310-win_amd64.whl", hash = "sha256:86a5a120c2ca57bae8069fad5b0b3834b358fbbcb50be0aeef202f52b69a04d5"},
+    {file = "nautilus_trader-1.195.0-cp311-cp311-macosx_14_0_arm64.whl", hash = "sha256:be90d971a6eab7849872978ea91853c8a53b8d49e35ff54019d7dc3ef45fe059"},
+    {file = "nautilus_trader-1.195.0-cp311-cp311-manylinux_2_31_x86_64.whl", hash = "sha256:a17f97fc6f132ed07a281f635a0249cd9e0d8b39b902d93fb30f5482f173ae8b"},
+    {file = "nautilus_trader-1.195.0-cp311-cp311-manylinux_2_35_x86_64.whl", hash = "sha256:888822afe7c2f5ec8d885b7eb699a7c824b0e44c5ebb828e8f9abea38518d324"},
+    {file = "nautilus_trader-1.195.0-cp311-cp311-win_amd64.whl", hash = "sha256:5abdf319ece876ae2b20598619cfb0f953a4e51af9574d60a93993573a84ce87"},
+    {file = "nautilus_trader-1.195.0-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:6dfa463a3942dea2b5e9ccc6539a91e8765e3d6bb46e785c95d4cfe3dfa6cdf4"},
+    {file = "nautilus_trader-1.195.0-cp312-cp312-manylinux_2_31_x86_64.whl", hash = "sha256:eaccba98f04cf94dc70aea3de25db802e17301861f2ffe8a25f1e691a464bd81"},
+    {file = "nautilus_trader-1.195.0-cp312-cp312-manylinux_2_35_x86_64.whl", hash = "sha256:6d922e1c142c69f5de38917f3e3263682831643c833b6fb31a5fc72813b4754b"},
+    {file = "nautilus_trader-1.195.0-cp312-cp312-win_amd64.whl", hash = "sha256:f9eef2ee431f9ef4e3b1434b9e9e142f16d4a9ad29d10c25683988c9962918d4"},
+    {file = "nautilus_trader-1.195.0.tar.gz", hash = "sha256:d64e8f898e5d4426a3526f70f3ba6bd2cf2b9073baa7fc4c47925bba42296506"},
 ]
 
 [package.dependencies]
@@ -326,7 +327,7 @@ click = ">=8.1.7,<9.0.0"
 cython = "3.0.10"
 fsspec = "2023.6.0"
 msgspec = ">=0.18.6,<0.19.0"
-numpy = ">=1.26.4,<2.0.0"
+numpy = "1.26.4"
 pandas = ">=2.2.2,<3.0.0"
 pyarrow = ">=16.1.0"
 pytz = ">=2024.1.0"
@@ -602,13 +603,13 @@ files = [
 
 [[package]]
 name = "urllib3"
-version = "2.2.1"
+version = "2.2.2"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "urllib3-2.2.1-py3-none-any.whl", hash = "sha256:450b20ec296a467077128bff42b73080516e71b56ff59a60a02bef2232c4fa9d"},
-    {file = "urllib3-2.2.1.tar.gz", hash = "sha256:d0570876c61ab9e520d776c38acbbb5b05a776d3f9ff98a5c8fd5162a444cf19"},
+    {file = "urllib3-2.2.2-py3-none-any.whl", hash = "sha256:a448b2f64d686155468037e1ace9f2d2199776e17f0a46610480d311f73e3472"},
+    {file = "urllib3-2.2.2.tar.gz", hash = "sha256:dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"},
 ]
 
 [package.extras]
@@ -664,4 +665,4 @@ test = ["Cython (>=0.29.36,<0.30.0)", "aiohttp (==3.9.0b0)", "aiohttp (>=3.8.1)"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "bae98d312dccadc4e823f8569d8286e2148e7e3eb7cf9fde39eebe0a9d296e69"
+content-hash = "95344b580f27c15fb8b539e30533bd604976db48f4be5b05f68b408db72f8d53"
