@@ -3,7 +3,7 @@ repos:
   #  General checks
   ##############################################################################
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: fix-encoding-pragma
         args: [--remove]
@@ -41,20 +41,20 @@ repos:
         types: [python]
 
   - repo: https://github.com/psf/black
-    rev: 24.4.2
+    rev: 24.10.0
     hooks:
       - id: black
         types_or: [python, pyi]
         entry: "black"
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.4.10
+    rev: v0.7.1
     hooks:
       - id: ruff
         args: ["--fix"]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.0
+    rev: v1.13.0
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports, --warn-no-return, --explicit-package-bases]
