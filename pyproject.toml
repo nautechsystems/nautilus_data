@@ -6,7 +6,7 @@ authors = ["Nautech Systems <info@nautechsystems.io>"]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
-nautilus_trader = ">=1.204.0"
+nautilus_trader = ">=1.209.0"
 requests = "^2.32"
 
 [build-system]
