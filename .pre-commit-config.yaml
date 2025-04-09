@@ -24,7 +24,7 @@ repos:
       - id: check-yaml
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
+    rev: v2.4.1
     hooks:
       - id: codespell
         description: Checks for common misspellings.
@@ -41,20 +41,20 @@ repos:
         types: [python]
 
   - repo: https://github.com/psf/black
-    rev: 24.10.0
+    rev: 25.1.0
     hooks:
       - id: black
         types_or: [python, pyi]
         entry: "black"
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.4
+    rev: v0.11.4
     hooks:
       - id: ruff
         args: ["--fix"]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.0
+    rev: v1.15.0
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports, --warn-no-return, --explicit-package-bases]
@@ -65,17 +65,3 @@ repos:
     rev: 0.8.1
     hooks:
       - id: nbstripout
-
-  ##############################################################################
-  #  Javascript formatting and linting
-  ##############################################################################
-  - repo: https://github.com/pre-commit/mirrors-jshint
-    rev: "v2.13.6"
-    hooks:
-      - id: jshint
-
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "v4.0.0-alpha.8"
-    hooks:
-      - id: prettier
-        args: ["--print-width", "160"]

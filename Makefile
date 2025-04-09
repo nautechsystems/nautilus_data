@@ -1,10 +1,10 @@
-PROJECT?= 				nautechsystems/nautilus_data
-REGISTRY?= 				ghcr.io/
-IMAGE?= 				${REGISTRY}${PROJECT}
-GIT_TAG:= 				$(shell git rev-parse --abbrev-ref HEAD)
-IMAGE_FULL?=			${IMAGE}:${GIT_TAG}
-PYTHON_EXECUTABLE:= 	$(shell which python3)
-NAUTILUS_PATH:=			"${HOME}/.nautilus"
+PROJECT?=nautechsystems/nautilus_data
+REGISTRY?=ghcr.io/
+IMAGE?=${REGISTRY}${PROJECT}
+GIT_TAG:=$(shell git rev-parse --abbrev-ref HEAD)
+IMAGE_FULL?=${IMAGE}:${GIT_TAG}
+PYTHON_EXECUTABLE:=$(shell which python3)
+NAUTILUS_PATH:="${HOME}/.nautilus"
 
 ########################################
 #  Docker development commands

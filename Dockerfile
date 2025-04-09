@@ -4,30 +4,25 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.8.5 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_CREATE=false \
-    POETRY_NO_INTERACTION=1 \
     PYSETUP_PATH="/opt/pysetup"
-ENV PATH="/root/.cargo/bin:$POETRY_HOME/bin:$PATH"
+ENV PATH="/root/.local/bin:/root/.cargo/bin:$PATH"
 WORKDIR $PYSETUP_PATH
 
 FROM base AS builder
 
 # Install build deps
-RUN apt-get update && apt-get install -y curl clang git libssl-dev make pkg-config
+RUN apt-get update && \
+    apt-get install -y curl clang gcc git libssl-dev make pkg-config && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install Rust stable
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-
-# Install poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+# Install UV
+COPY uv-version ./
+RUN UV_VERSION=$(cat uv-version) && curl -LsSf https://astral.sh/uv/$UV_VERSION/install.sh | sh
 
 # Install project
-COPY pyproject.toml poetry.lock ./
-RUN poetry install --only main
 COPY . ./
-RUN poetry install
+RUN uv pip install . --system
 
 FROM base AS application
 

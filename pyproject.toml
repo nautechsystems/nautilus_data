@@ -1,21 +1,65 @@
-[tool.poetry]
+[project]
 name = "nautilus_data"
-version = "0.15.0"
-description = ""
-authors = ["Nautech Systems <info@nautechsystems.io>"]
-
-[tool.poetry.dependencies]
-python = ">=3.11,<3.13"
-nautilus_trader = ">=1.209.0"
-requests = "^2.32"
+version = "0.16.0"
+description = "Example data for use with NautilusTrader"
+authors = [
+    {name = "Nautech Systems", email = "info@nautechsystems.io"},
+]
+requires-python = "~=3.12"
+dependencies = [
+    "nautilus_trader>=1.215.0",
+    "requests>=2.32.0,<3.0.0",
+]
 
 [build-system]
-requires = ["poetry-core>=1.9.1"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.uv.sources]
+nautilus_trader = { index = "nautechsystems" }
+
+[[tool.uv.index]]
+name = "nautechsystems"
+url = "https://packages.nautechsystems.io/simple"
+
+##########################################################
+# Formatter configs                                      #
+##########################################################
+[tool.black]
+target_version = ["py312"]
+line_length = 100
+
+[tool.docformatter]
+black = true
+make-summary-multi-line = true
+pre-summary-new-line = true
+blank = true
+recursive = true
+in-place = true
+
+##########################################################
+# Linter configs                                         #
+##########################################################
 [tool.ruff]
-target-version = "py311"
+target-version = "py312"
 line-length = 100
+
+exclude = [
+    ".benchmarks",
+    ".eggs",
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "dist",
+    "venv",
+]
+
+[tool.ruff.lint]
 select = [
     "C4",
     "E",
@@ -63,71 +107,41 @@ ignore = [
     "D416",  # Section name should end with a colon ('Warnings:', not 'Warnings') (incorrect?)
     "E741",  # Ambiguous variable name (single char)
     "PD901", # `df` is a bad variable name. Be kinder to your future self
+    "RUF012",  # Mutable class attributes should be annotated with `typing.ClassVar`
     "S101",  # Use of assert detected (OK in test suite)
-    "S105",  # Use of hardcoded password (spurious)
-    "S106",  # Use of hardcoded password (spurious)
+    "S105",  # Use of hard-coded password (spurious)
+    "S106",  # Use of hard-coded password (spurious)
     "S113",  # Probable use of requests call without timeout **fix**
+    "S603",  # `subprocess` call: check for execution of untrusted input **fix**
 ]
 
 # Allow autofix for all enabled rules (when `--fix`) is provided
-fixable = [
-    "A",
-    "B",
-    "C",
-    "C4",
-    "D",
-    "DTZ",
-    "E",
-    "F",
-    "UP",
-    "S",
-    "W",
-    "I",
-    "PIE",
-    "PT",
-    "PYI",
-    "RSE",
-    "TID",
-    "ARG",
-    "PD",
-    "SIM",
-    # "PGH",
-    "NPY",
-    "RUF",
-]
+fixable = ["ALL"]
 
 unfixable = []
-
-exclude = [
-    ".benchmarks",
-    ".eggs",
-    ".git",
-    ".mypy_cache",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".venv",
-    "build",
-    "dist",
-    "venv",
-]
-
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.isort]
+combine-as-imports = true
 force-single-line = true
 single-line-exclusions = ["typing"]
 lines-after-imports = 2
+split-on-trailing-comma = true
 
 [tool.ruff.mccabe]
 max-complexity = 10
 
+##########################################################
+# Static analysis configs                                #
+##########################################################
 [tool.mypy]
-python_version = "3.11"
-disallow_incomplete_defs = true
+python_version = "3.12"
+# disallow_incomplete_defs = true
 explicit_package_bases = true
 ignore_missing_imports = true
 namespace_packages = true
+no_strict_optional = true
 warn_no_return = true
 warn_unused_configs = true
 warn_unused_ignores = true
