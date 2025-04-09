@@ -32,5 +32,8 @@ ENV CATALOG_PATH=/catalog
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY ./nautilus_data $PYSETUP_PATH/nautilus_data
 
+# Ensure the catalog and backtest directories exist
+RUN mkdir -p /opt/pysetup/catalog/backtest
+
 # Generate data catalog
 RUN python -m nautilus_data.hist_data_to_catalog
