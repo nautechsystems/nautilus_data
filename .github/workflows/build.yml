@@ -28,13 +28,13 @@ jobs:
 
       - name: Set up Python
         # https://github.com/actions/setup-python
-        uses: actions/setup-python@cae9d6a5c961a2c267bc955ecf8d27bc955b2e83 # v5.4.0
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
         with:
           python-version: "3.13"
 
       - name: Install uv
         # https://github.com/astral-sh/setup-uv
-        uses: astral-sh/setup-uv@1b6072f24a1f5e1bf6797b14bb96e52cf5e1f027 # v5.0.1
+        uses: astral-sh/setup-uv@557e51de59eb14aaaba2ed9621916900a91d50c6 # v6.6.1
 
       - name: Install dependencies
         run: uv sync --all-groups
@@ -63,12 +63,12 @@ jobs:
 
       - name: Set up Docker Buildx
         # https://github.com/docker/setup-buildx-action
-        uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
+        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
 
       - name: Login to GHCR
         if: github.event_name == 'push'
         # https://github.com/docker/login-action
-        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
+        uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3.5.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -82,7 +82,7 @@ jobs:
       - name: Build and push Docker image
         id: docker_build
         # https://github.com/docker/build-push-action
-        uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6.15.0
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
           context: .
           file: Dockerfile
