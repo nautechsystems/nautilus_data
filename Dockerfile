@@ -1,4 +1,4 @@
-FROM python:3.12-slim AS base
+FROM python:3.13-slim AS base
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \
@@ -29,7 +29,7 @@ FROM base AS application
 ENV CATALOG_PATH=/catalog
 
 # Copy python environment from builder
-COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
 COPY ./nautilus_data $PYSETUP_PATH/nautilus_data
 
 # Ensure the catalog and backtest directories exist

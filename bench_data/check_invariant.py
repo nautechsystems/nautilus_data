@@ -5,9 +5,8 @@ import pandas as pd
 
 def check_file(file_name):
     """
-    Check if the 'start_ts' column is in ascending order and 'end_ts' for a row
-    groups comes before 'start_ts' of the next row group.
-
+    Check if the 'start_ts' column is in ascending order and 'end_ts' for a row groups
+    comes before 'start_ts' of the next row group.
     """
     df = pd.read_csv(file_name)
 
@@ -18,7 +17,7 @@ def check_file(file_name):
     # Check if 'end_ts' for a row comes before 'start_ts' of the next row
     for i in range(1, len(df)):
         if df.loc[i - 1, "end_ts"] > df.loc[i, "start_ts"]:
-            print(f"Row {i-1} and {i} fail the check:")
+            print(f"Row {i - 1} and {i} fail the check:")
             print(df.loc[[i - 1, i]])
 
 

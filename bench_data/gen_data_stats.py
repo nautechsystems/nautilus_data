@@ -6,7 +6,9 @@ import pyarrow.parquet as pq
 
 
 def record_data_stats(folder_path, csv_file):
-    """Record statistics about Parquet files in a folder."""
+    """
+    Record statistics about Parquet files in a folder.
+    """
     with open(csv_file, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(

@@ -5,7 +5,9 @@ import pyarrow.parquet as pq
 
 
 def extract_ts_init_values(parquet_file, csv_file):
-    """Write the first and last 'ts_init' values of each row group to a CSV file."""
+    """
+    Write the first and last 'ts_init' values of each row group to a CSV file.
+    """
     # Open the Parquet file
     parquet_file = pq.ParquetFile(parquet_file)
 

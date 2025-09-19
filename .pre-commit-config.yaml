@@ -3,16 +3,16 @@ repos:
   #  General checks
   ##############################################################################
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
-      - id: fix-encoding-pragma
-        args: [--remove]
       - id: end-of-file-fixer
-        types_or: [python]
+        types_or: [python, markdown]
+      - id: mixed-line-ending
       - id: trailing-whitespace
-        types_or: [python]
+        types_or: [python, markdown]
       - id: debug-statements
       - id: detect-private-key
+      - id: check-added-large-files
       - id: check-builtin-literals
       - id: check-case-conflict
       - id: check-executables-have-shebangs
@@ -29,37 +29,60 @@ repos:
       - id: codespell
         description: Checks for common misspellings.
         types_or: [python, cython, rst, markdown]
+        args: ["-L", "ACN,crate,ot,socio-economic,zar"]
+
+  ##############################################################################
+  #  Custom hooks
+  ##############################################################################
+  - repo: local
+    hooks:
+      - id: zizmor
+        name: zizmor (audit GitHub actions)
+        description: Audit GitHub Actions workflows
+        language: python
+        additional_dependencies: [zizmor]
+        entry: zizmor
+        files: '^\.github/workflows/.*\.ya?ml$'
+        pass_filenames: false
+        args: ["--no-online-audits", "--min-severity", "medium", ".github/workflows"]
 
   ##############################################################################
   #  Python formatting and linting
   ##############################################################################
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v3.1.0
+    rev: v3.2.0
     hooks:
       - id: add-trailing-comma
         name: add-trailing-comma
         types: [python]
 
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
-        types_or: [python, pyi]
-        entry: "black"
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.4
+    rev: v0.13.1
     hooks:
       - id: ruff
         args: ["--fix"]
+      - id: ruff-format
+
+  - repo: https://github.com/PyCQA/docformatter
+    rev: v1.7.7
+    hooks:
+      - id: docformatter
+        additional_dependencies: [tomli]
+        args: [
+          "--black",
+          "--make-summary-multi-line",
+          "--pre-summary-newline",
+          "--blank",
+          "--recursive",
+          "--in-place",
+        ]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0
+    rev: v1.18.2
     hooks:
       - id: mypy
-        args: [--no-strict-optional, --ignore-missing-imports, --warn-no-return, --explicit-package-bases]
+        args: ["--config", "pyproject.toml"]
         additional_dependencies: [types-pytz, types-redis, types-toml, types-requests, msgspec]
-        exclude: "nautilus_server/backend/api_v1/endpoints/models*"
 
   - repo: https://github.com/kynan/nbstripout
     rev: 0.8.1

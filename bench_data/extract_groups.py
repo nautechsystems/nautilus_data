@@ -46,7 +46,9 @@ trade_tick_schema = trade_tick_schema.with_metadata(
 
 
 def write_parquet_with_row_group(input_file, output_file, rows_per_row_group):
-    """Write a Parquet file with specified row group size."""
+    """
+    Write a Parquet file with specified row group size.
+    """
     df = pd.read_parquet(input_file)
 
     schema = quote_tick_schema if "quotes" in input_file else trade_tick_schema

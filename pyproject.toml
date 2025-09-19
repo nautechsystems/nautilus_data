@@ -1,14 +1,23 @@
 [project]
 name = "nautilus_data"
-version = "0.16.0"
+version = "0.17.0"
 description = "Example data for use with NautilusTrader"
 authors = [
     {name = "Nautech Systems", email = "info@nautechsystems.io"},
 ]
-requires-python = "~=3.12"
+requires-python = ">=3.13"
 dependencies = [
-    "nautilus_trader>=1.215.0",
-    "requests>=2.32.0,<3.0.0",
+    "nautilus_trader>=1.220.0",
+    "requests>=2.32.5,<3.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.0",
+    "pytest>=8.0.0",
+    "ruff>=0.12.12",
+    "mypy>=1.18.2",
+    "zizmor>=1.13.0",
 ]
 
 [build-system]
@@ -28,12 +37,7 @@ url = "https://packages.nautechsystems.io/simple"
 ##########################################################
 # Formatter configs                                      #
 ##########################################################
-[tool.black]
-target_version = ["py312"]
-line_length = 100
-
 [tool.docformatter]
-black = true
 make-summary-multi-line = true
 pre-summary-new-line = true
 blank = true
@@ -44,7 +48,7 @@ in-place = true
 # Linter configs                                         #
 ##########################################################
 [tool.ruff]
-target-version = "py312"
+target-version = "py313"
 line-length = 100
 
 exclude = [
@@ -106,7 +110,6 @@ ignore = [
     "D415",  # First line should end with a period, question mark, or exclamation point (not always a first line)
     "D416",  # Section name should end with a colon ('Warnings:', not 'Warnings') (incorrect?)
     "E741",  # Ambiguous variable name (single char)
-    "PD901", # `df` is a bad variable name. Be kinder to your future self
     "RUF012",  # Mutable class attributes should be annotated with `typing.ClassVar`
     "S101",  # Use of assert detected (OK in test suite)
     "S105",  # Use of hard-coded password (spurious)
@@ -122,22 +125,22 @@ unfixable = []
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 combine-as-imports = true
 force-single-line = true
 single-line-exclusions = ["typing"]
 lines-after-imports = 2
 split-on-trailing-comma = true
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 10
 
 ##########################################################
 # Static analysis configs                                #
 ##########################################################
 [tool.mypy]
-python_version = "3.12"
-# disallow_incomplete_defs = true
+python_version = "3.13"
+allow_incomplete_defs = true
 explicit_package_bases = true
 ignore_missing_imports = true
 namespace_packages = true
