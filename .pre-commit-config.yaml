@@ -31,6 +31,28 @@ repos:
         types_or: [python, cython, rst, markdown]
         args: ["-L", "ACN,crate,ot,socio-economic,zar"]
 
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.12.0-2
+    hooks:
+      - id: shfmt
+        args: ["-i", "2", "-ci", "-sr", "-w"]
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+        args: [--strict]
+
+  - repo: https://github.com/ComPWA/taplo-pre-commit
+    rev: v0.9.3
+    hooks:
+      - id: taplo-format
+
   ##############################################################################
   #  Custom hooks
   ##############################################################################
@@ -50,14 +72,14 @@ repos:
   #  Python formatting and linting
   ##############################################################################
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v3.2.0
+    rev: v4.0.0
     hooks:
       - id: add-trailing-comma
         name: add-trailing-comma
         types: [python]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.1
+    rev: v0.14.0
     hooks:
       - id: ruff
         args: ["--fix"]
@@ -83,6 +105,12 @@ repos:
       - id: mypy
         args: ["--config", "pyproject.toml"]
         additional_dependencies: [types-pytz, types-redis, types-toml, types-requests, msgspec]
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.8.24  # Must match uv-version file
+    hooks:
+      - id: uv-lock
+        files: ^python/uv\.lock$
 
   - repo: https://github.com/kynan/nbstripout
     rev: 0.8.1
