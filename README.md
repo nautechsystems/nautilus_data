@@ -49,7 +49,7 @@ use the main repository's test-data docs and the R2 files above.
 
 Use the NautilusTrader developer guide for current dataset rules:
 
-- https://nautilustrader.io/docs/developer_guide/test_datasets
+- https://nautilustrader.io/docs/latest/developer_guide/test_datasets/
 
 Large curated datasets should be hosted through the public test-data bucket and recorded in
 `tests/test_data/large/checksums.json`. Datasets with redistribution limits should use the
