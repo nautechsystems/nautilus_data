@@ -1,45 +1,64 @@
-# nautilus_data
+# Nautilus Data (Decommissioned)
 
-Example market data for use with NautilusTrader.
+This repository has been decommissioned.
 
-## Installation
+Decommissioned: 2026-05.
 
-```bash
-uv pip install nautilus_data
-```
+Example datasets for NautilusTrader now live under the standard test-data layout in the
+main `nautechsystems/nautilus_trader` repository.
 
-## Requirements
+## Why this changed
 
-- Python 3.13+
-- NautilusTrader 1.220.0+
+This repository predated the current NautilusTrader test-data policy. Keeping it separate
+created a second path for fixture data, package metadata, and container builds. The main
+repository now provides the policy, checksum registry, metadata sidecars, helper functions,
+and public R2 hosting for curated large datasets.
 
-## Usage
+Decommissioning this repository:
 
-This package provides sample market data that can be used for backtesting and development with the NautilusTrader platform.
+- Keeps test data discovery in one place.
+- Retires the old `nautilus_data` package and container build path.
+- Preserves the EURUSD.SIM sample catalog through the public R2 test-data bucket.
+- Keeps raw HISTDATA source files user-fetched instead of redistributing them here.
 
-## Data
+Existing package or container artifacts, if any, should be treated as frozen historical
+artifacts. The `nautilus_data` Python package API is not maintained here.
 
-The package includes historical foreign exchange (FX) tick data:
+## Where the data moved
 
-- **EUR/USD** - January 2020 tick-level bid/ask quotes
-- Format: CSV compressed with gzip.
-- Source: Publicly available FX market data.
+The former EURUSD.SIM catalog data is available as Nautilus Parquet:
 
-### Loading data into a catalog
+- https://test-data.nautechsystems.io/large/histdata_EURUSD.SIM_2020-01_quotes.parquet
+- https://test-data.nautechsystems.io/large/histdata_EURUSD.SIM_2020-01_instrument.parquet
 
-```python
-from nautilus_data.hist_data_to_catalog import load_data
+Checksums and provenance metadata live in the main repository:
 
-# Load historical data into your NautilusTrader catalog
-load_data()
-```
+- `tests/test_data/large/checksums.json`
+- `tests/test_data/large/histdata_EURUSD.SIM_2020-01_quotes.metadata.json`
+- `tests/test_data/large/histdata_EURUSD.SIM_2020-01_instrument.metadata.json`
 
-## Structure
+Rust helpers are available from `nautilus_testkit::common`:
 
-- `catalog/` - Pre-processed data catalog files (once `hist_data_to_catalog.py` is run).
-- `raw_data/` - Raw historical data files.
-- `bench_data/` - Benchmark data for performance testing.
+- `ensure_histdata_eurusd_quotes_parquet()`
+- `ensure_histdata_eurusd_instrument_parquet()`
 
-## More Information
+There is no replacement `nautilus_data.hist_data_to_catalog` Python API. Python users should
+use the main repository's test-data docs and the R2 files above.
 
-For more information about NautilusTrader, visit [nautechsystems.io](https://nautechsystems.io).
+## Test-data policy
+
+Use the NautilusTrader developer guide for current dataset rules:
+
+- https://nautilustrader.io/docs/developer_guide/test_datasets
+
+Large curated datasets should be hosted through the public test-data bucket and recorded in
+`tests/test_data/large/checksums.json`. Datasets with redistribution limits should use the
+user-fetched workflow documented in the developer guide.
+
+## Raw HISTDATA files
+
+Raw HISTDATA CSV files are not mirrored here. Download them directly from histdata.com when
+following examples or tests that require user-fetched source data.
+
+This repository remains only as a historical pointer for old links, tutorials, and old
+`pip install nautilus_data` instructions.
